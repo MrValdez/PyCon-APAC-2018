@@ -1,7 +1,13 @@
 import arcade
+from enum import Enum, auto
 
 def flip_y(SIZE, y):
     return SIZE[1] - y
+
+class GameState(Enum):
+    RUNNING = auto()
+    NEXT_STAGE = auto()
+    FINISHED_STAGE = auto()
 
 class Text:
     """ Helper class to have text with a default kwargs for this project """

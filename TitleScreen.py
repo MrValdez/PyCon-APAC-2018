@@ -1,5 +1,6 @@
 from helper import (flip_y,
-                    Text)
+                    Text,
+                    GameState)
 
 class TitleScreen:
     def __init__(self, WindowSize):
@@ -14,11 +15,15 @@ class TitleScreen:
         self.blink = self.blink_time
         self.start_text_visible = True
 
+        self.gameState = GameState.RUNNING
+
     def update(self, delta_time):
         self.blink -= delta_time
         if self.blink < 0:
             self.blink += self.blink_time
             self.start_text_visible = not self.start_text_visible
+
+        return self.gameState
 
     def draw(self):
         for text in self.texts:
@@ -26,3 +31,6 @@ class TitleScreen:
 
         if self.start_text_visible:
             self.start_text.draw()
+
+    def on_key_press(self, key, modifiers):
+        self.gameState = GameState.NEXT_STAGE
