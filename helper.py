@@ -49,6 +49,44 @@ class Text:
         arcade.draw_text(**self.kwargs)
 
 
+class Image(arcade.Sprite):
+    """ 
+    Helper class to make the code consistent with Text element
+    
+    transitions: left, right, bottom
+    """
+    
+    def __init__(self, left, top, filename, transition=None):
+        super().__init__(filename)
+        self.target_position = [left, top]
+
+        if transition == "left":
+            self.left = left - 1000     # todo: it would be nice to soft code this to the window's width
+        elif transition == "right":
+            self.left = left + 1000     # todo: it would be nice to soft code this to the window's position
+        else:
+            self.left = left
+
+        if transition == "bottom":
+            self.top = top - 1000
+        else:
+            self.top = top
+
+    def update(self):
+        speed = 30
+        if self.left < self.target_position[0]:
+            self.left += speed
+            self.left = min(self.left, self.target_position[0])     # prevent overshoot
+        if self.left > self.target_position[0]:
+            self.left -= speed
+            self.left = max(self.left, self.target_position[0])     # prevent overshoot
+        if self.top < self.target_position[1]:
+            self.top += speed
+            self.top = min(self.top, self.target_position[1])     # prevent overshoot
+
+        super().update()
+
+
 class Avatar(arcade.Sprite):
     def __init__(self, *args):
         super().__init__(*args)
@@ -77,7 +115,6 @@ class SlideTemplate(Screen):
         self.header = [
             Text(10, flip_y(WindowSize, 20), title, {"font_name": "Georgia", "font_size": 40, "bold": True, "anchor_x": "left", "align": "left"}),
             Text(30, flip_y(WindowSize, 90), subtitle, {"font_name": "Georgia", "font_size": 20, "italic": True, "anchor_x": "left", "align": "left"}),
-            
         ]
 
         self.WindowSize = WindowSize
@@ -88,10 +125,14 @@ class SlideTemplate(Screen):
         # adjust all y coordinates of text in slides to below the header
         for slide in self.slides:
             for element in slide:
-                element.kwargs["start_y"] -= self.header_height
-                element.kwargs["align"] = "left"
-                element.kwargs["anchor_x"] = "left"
-                element.kwargs["color"] = arcade.color.BLACK
+                if type(element) is Text:
+                    element.kwargs["start_y"] -= self.header_height
+                    element.kwargs["align"] = "left"
+                    element.kwargs["anchor_x"] = "left"
+                    element.kwargs["color"] = arcade.color.BLACK
+                if type(element) is Image:
+                    element.top -= self.header_height
+                    element.target_position[1] -= self.header_height
 
     def load(self):
         self.currentSlide = 0
@@ -99,6 +140,10 @@ class SlideTemplate(Screen):
         arcade.set_background_color(arcade.color.WHITE)
 
     def update(self, delta_time):
+        for element in self.slides[self.currentSlide]:
+            if type(element) is Image:
+                element.update()
+
         return self.gameState
 
     def draw(self):
@@ -107,8 +152,8 @@ class SlideTemplate(Screen):
         for text in self.header:
             text.draw()
 
-        for text in self.slides[self.currentSlide]:
-            text.draw()
+        for element in self.slides[self.currentSlide]:
+            element.draw()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.LEFT:
