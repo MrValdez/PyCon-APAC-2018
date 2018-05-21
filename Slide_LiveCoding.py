@@ -4,7 +4,7 @@ from helper import (flip_y,
                     SlideTemplate)
 
 
-class Stage7(SlideTemplate):
+class Slide(SlideTemplate):
     def __init__(self, WindowSize):
         title = "Stage 7"
         subtitle = "Live coding"
