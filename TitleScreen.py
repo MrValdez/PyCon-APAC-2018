@@ -1,3 +1,4 @@
+import arcade
 from helper import (flip_y,
                     Text,
                     GameState,
@@ -18,6 +19,7 @@ class TitleScreen(Screen):
     def load(self):
         self.start_text_visible = True
         self.gameState = GameState.RUNNING
+        arcade.set_background_color(arcade.color.AMAZON)
 
     def update(self, delta_time):
         self.blink -= delta_time
