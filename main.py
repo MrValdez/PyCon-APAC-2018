@@ -9,6 +9,7 @@ from IntroScreen import IntroScreen
 from Stage1 import Stage1
 from Stage1b import Stage1b
 from Stage2 import Stage2
+from Stage6 import Stage6
 from Stage7 import Stage7
 
 WindowSize = (1024, 600)
@@ -25,11 +26,12 @@ class Engine(arcade.Window):
                        Stage1(WindowSize),
                        Stage1b(WindowSize),
                        Stage2(WindowSize),
+                       Stage6(WindowSize),
                        Stage7(WindowSize)]
 
         self.WindowSize = WindowSize
         self.currentStage = self.stages[0]
-        self.currentStage = self.stages[-1]      # debugging
+        self.currentStage = self.stages[-2]      # debugging
         self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
