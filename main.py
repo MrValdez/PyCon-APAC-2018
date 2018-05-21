@@ -7,6 +7,7 @@ from TitleScreen import TitleScreen
 from FadeScreen import FadeScreen
 from IntroScreen import IntroScreen
 from Stage1 import Stage1
+from Stage1b import Stage1b
 from Stage2 import Stage2
 
 WindowSize = (1024, 600)
@@ -21,6 +22,7 @@ class Engine(arcade.Window):
         self.stages = [TitleScreen(WindowSize),
                        IntroScreen(WindowSize),
                        Stage1(WindowSize),
+                       Stage1b(WindowSize),
                        Stage2(WindowSize)]
 
         self.WindowSize = WindowSize
@@ -51,6 +53,9 @@ class Engine(arcade.Window):
             self.fade.draw()
 
     def update(self, delta_time):
+        returned_game_state = None
+        fading_state = None
+
         if self.gameState == GameState.RUNNING:
             returned_game_state = self.currentStage.update(delta_time)
             if returned_game_state in GameState:
@@ -60,15 +65,16 @@ class Engine(arcade.Window):
                 # Start transition to fade out 
                 self.fade.start_fade_out()
 
-        self.avatar.update()
-        
         if self.gameState == GameState.NEXT_STAGE:
-            state = self.fade.update(delta_time)
-            if state == GameState.FINISHED_STAGE:
-                self.gameState = GameState.RUNNING
-                new_stage = self.stages.index(self.currentStage) + 1
-                new_stage %= len(self.stages)
-                self.change_stage(new_stage)
+            fading_state = self.fade.update(delta_time)
+
+        if GameState.FINISHED_STAGE in (fading_state, returned_game_state):
+            self.gameState = GameState.RUNNING
+            new_stage = self.stages.index(self.currentStage) + 1
+            new_stage %= len(self.stages)
+            self.change_stage(new_stage)
+
+        self.avatar.update()
 
     def change_stage(self, new_stage_index):
         self.currentStage = self.stages[new_stage_index]

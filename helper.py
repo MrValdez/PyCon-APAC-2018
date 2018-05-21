@@ -118,5 +118,5 @@ class SlideTemplate(Screen):
             self.currentSlide += 1
 
         if self.currentSlide >= len(self.slides):
-            self.gameState = GameState.NEXT_STAGE
+            self.gameState = GameState.FINISHED_STAGE
             self.currentSlide = len(self.slides) - 1
