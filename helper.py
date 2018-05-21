@@ -18,7 +18,7 @@ class Text:
 
     def __init__(self, x, y, text, kwargs=None):
         self.kwargs = {"color": arcade.color.WHITE,
-                       "font_name": ("Arial"),
+                       "font_name": "Arial",
                        "font_size": 20,
                        "anchor_x": "center",
                        "anchor_y": "top",
