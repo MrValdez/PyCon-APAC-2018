@@ -140,9 +140,10 @@ class SlideTemplate(Screen):
         arcade.set_background_color(arcade.color.WHITE)
 
     def update(self, delta_time):
-        for element in self.slides[self.currentSlide]:
-            if type(element) is Image:
-                element.update()
+        if self.slides:
+            for element in self.slides[self.currentSlide]:
+                if type(element) is Image:
+                    element.update()
 
         return self.gameState
 
@@ -152,8 +153,9 @@ class SlideTemplate(Screen):
         for text in self.header:
             text.draw()
 
-        for element in self.slides[self.currentSlide]:
-            element.draw()
+        if self.slides:
+            for element in self.slides[self.currentSlide]:
+                element.draw()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.LEFT:
