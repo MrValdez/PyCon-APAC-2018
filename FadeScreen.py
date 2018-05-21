@@ -1,6 +1,8 @@
 import arcade
+from helper import (GameState,
+                    Screen)
 
-class FadeScreen:
+class FadeScreen(Screen):
     def __init__(self, WindowSize):
         self.WindowSize = WindowSize
         self.speed = 7
@@ -21,6 +23,11 @@ class FadeScreen:
             self.alpha -= self.speed
 
         self.alpha = max(min(self.alpha, 255), 0)
+
+        if self.fade_in and self.alpha >= 255:
+            return GameState.FINISHED_STAGE
+        if not self.fade_in and self.alpha <= 0:
+            return GameState.FINISHED_STAGE
 
     def draw(self):
         color = [0, 0, 0, self.alpha]

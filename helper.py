@@ -9,6 +9,10 @@ class GameState(Enum):
     NEXT_STAGE = auto()
     FINISHED_STAGE = auto()
 
+class Screen:
+    def load(self):
+        pass
+
 class Text:
     """ Helper class to have text with a default kwargs for this project """
 

@@ -4,6 +4,7 @@ from helper import (flip_y,
                     GameState)
 from TitleScreen import TitleScreen
 from FadeScreen import FadeScreen
+from IntroScreen import IntroScreen
 
 WindowSize = (800, 600)
 
@@ -36,8 +37,12 @@ class Engine(arcade.Window):
         self.set_location(5, 30)
         arcade.set_background_color(arcade.color.AMAZON)
 
+        self.stages = [TitleScreen(WindowSize),
+                       IntroScreen(WindowSize)]
+
         self.WindowSize = WindowSize
-        self.currentStage = TitleScreen(WindowSize)
+        self.currentStage = self.stages[0]
+        self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
 
@@ -61,10 +66,20 @@ class Engine(arcade.Window):
         if self.gameState == GameState.RUNNING:
             self.gameState = self.currentStage.update(delta_time)
 
+            if self.gameState == GameState.NEXT_STAGE:
+                # Start transition to fade out 
+                self.fade.start_fade_out()
+
         self.avatar.update()
         
         if self.gameState == GameState.NEXT_STAGE:
-            self.fade.update(delta_time)
+            state = self.fade.update(delta_time)
+            if state == GameState.FINISHED_STAGE:
+                self.gameState = GameState.RUNNING
+                new_stage = self.stages.index(self.currentStage) + 1
+                new_stage %= len(self.stages)
+                self.currentStage = self.stages[new_stage]
+                self.currentStage.load()
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.ESCAPE:

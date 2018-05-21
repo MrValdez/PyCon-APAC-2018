@@ -3,10 +3,10 @@ from helper import (flip_y,
                     GameState,
                     Screen)
 
-class TitleScreen(Screen):
+class IntroScreen(Screen):
     def __init__(self, WindowSize):
         self.texts = [
-            Text(WindowSize[0] / 2, flip_y(WindowSize, 110), "MrValdez", {"font_size": 60, "font_name": "Armalite Rifle"}),
+            Text(WindowSize[0] / 2, flip_y(WindowSize, 110), "The source code for this presentation can be found at https://github.com/MrValdez/PyCon-APAC-2018", {"font_size": 60, "font_name": "Armalite Rifle"}),
             Text(WindowSize[0] / 2, flip_y(WindowSize, 190), "Game Programming with Python", {"font_size": 30}),
             Text(WindowSize[0] / 2, flip_y(WindowSize, 500), "Difficulty: Intermediate", {"italic": True}),
         ]
