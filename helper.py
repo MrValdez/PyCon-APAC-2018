@@ -13,6 +13,19 @@ class Screen:
     def load(self):
         pass
 
+    def update(self, delta_time):
+        pass
+
+    def draw(self):
+        pass
+
+    def on_key_press(self,key, modifiers):
+        pass
+
+    def on_key_release(self, key, modifiers):
+        pass
+
+
 class Text:
     """ Helper class to have text with a default kwargs for this project """
 
