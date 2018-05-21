@@ -34,3 +34,26 @@ class Text:
 
     def draw(self):
         arcade.draw_text(**self.kwargs)
+
+
+class Avatar(arcade.Sprite):
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.speed = 10
+
+    def update(self):
+        super().update()
+
+    def move(self, key, modifier, keydown):
+        speed = self.speed
+        if not keydown:
+            speed *= -1
+
+        if key == arcade.key.UP:
+            self.change_y += speed
+        if key == arcade.key.DOWN:
+            self.change_y += -speed
+        if key == arcade.key.LEFT:
+            self.change_x += -speed
+        if key == arcade.key.RIGHT:
+            self.change_x += speed

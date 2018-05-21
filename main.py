@@ -1,34 +1,14 @@
 import arcade
 from helper import (flip_y,
                     Text,
-                    GameState)
+                    GameState,
+                    Avatar)
 from TitleScreen import TitleScreen
 from FadeScreen import FadeScreen
 from IntroScreen import IntroScreen
+from Stage1 import Stage1
 
 WindowSize = (1024, 600)
-
-class Avatar(arcade.Sprite):
-    def __init__(self, *args):
-        super().__init__(*args)
-        self.speed = 10
-
-    def update(self):
-        super().update()
-
-    def move(self, key, modifier, keydown):
-        speed = self.speed
-        if not keydown:
-            speed *= -1
-
-        if key == arcade.key.UP:
-            self.change_y += speed
-        if key == arcade.key.DOWN:
-            self.change_y += -speed
-        if key == arcade.key.LEFT:
-            self.change_x += -speed
-        if key == arcade.key.RIGHT:
-            self.change_x += speed
 
 
 class Engine(arcade.Window):
@@ -38,18 +18,20 @@ class Engine(arcade.Window):
         arcade.set_background_color(arcade.color.AMAZON)
 
         self.stages = [TitleScreen(WindowSize),
-                       IntroScreen(WindowSize)]
+                       IntroScreen(WindowSize),
+                       Stage1(WindowSize)]
 
         self.WindowSize = WindowSize
         self.currentStage = self.stages[0]
-        self.currentStage = self.stages[1]
+        self.currentStage = self.stages[2]      # debugging
         self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
 
-        self.debug = True
+        self.debug = False
 
     def setup(self):
+        # This avatar is useful for debugging purposes.
         self.avatar = Avatar("crono_back.gif")
         self.avatar.center_x = WindowSize[0] / 2
         self.avatar.center_y = WindowSize[1] / 2
@@ -100,6 +82,7 @@ class Engine(arcade.Window):
         self.avatar.move(key, modifiers, keydown=True)
 
     def on_key_release(self, key, modifiers):
+        self.currentStage.on_key_release(key, modifiers)
         self.avatar.move(key, modifiers, keydown=False)
 
 def main():
