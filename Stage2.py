@@ -7,12 +7,23 @@ from helper import (flip_y,
 class Stage2(SlideTemplate):
     def __init__(self, WindowSize):
         title = "Stage 2"
-        subtitle = "What knowledge do we need for game programming?"
+        subtitle = "What knowledge are needed for game programming?"
 
-        slides = [[Text(10, flip_y(WindowSize, 20), "Slide 1"),
-                   Text(10, flip_y(WindowSize, 50), "Slide 1")],
-                   
-                  [Text(10, flip_y(WindowSize, 0), "Slide 2")],
+        slides = [[],
+
+                  [Text(50, flip_y(WindowSize, 70), "1. Object Oriented Programming"),],
+ 
+                  [Text(50, flip_y(WindowSize, 70), """1. Object Oriented Programming
+2. Maths""")],
+
+                  [Text(50, flip_y(WindowSize, 70), """1. Object Oriented Programming
+2. Maths
+3. Game loop""")],
+
+                  [Text(50, flip_y(WindowSize, 70), """1. Object Oriented Programming
+2. Maths
+3. Game loop
+4. Game library""")],
                  ]
 
         super().__init__(WindowSize, title, subtitle, slides)
