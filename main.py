@@ -8,6 +8,7 @@ from FadeScreen import FadeScreen
 from IntroScreen import IntroScreen
 from Stage1 import Stage1
 from Stage1b import Stage1b
+from Stage1c import Stage1c
 import Slide_TOC
 import Slide_GameLoop
 import Slide_OOP
@@ -27,6 +28,7 @@ class Engine(arcade.Window):
                        IntroScreen(WindowSize),
                        Stage1(WindowSize),
                        Stage1b(WindowSize),
+                       Stage1c(WindowSize),
                        Slide_TOC.Slide(WindowSize),
                        Slide_GameProgrammingLibraries.Slide(WindowSize),
                        Slide_LiveCoding.Slide(WindowSize),
@@ -38,6 +40,7 @@ class Engine(arcade.Window):
         self.WindowSize = WindowSize
         self.currentStage = self.stages[0]
         self.currentStage = self.stages[-2]      # debugging
+        self.currentStage = self.stages[4]      # debugging
         self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
