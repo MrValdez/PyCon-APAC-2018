@@ -98,7 +98,3 @@ This is the one hour story of how PyCon APAC 2018 made a game.
             text.draw()
 
         self.sprites.draw()
-
-    def on_key_press(self, key, modifiers):
-        pass
-#        self.gameState = GameState.NEXT_STAGE
