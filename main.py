@@ -13,6 +13,7 @@ import Slide_TOC
 import Slide_GameLoop
 import Slide_OOP
 import Slide_GameProgrammingLibraries
+import Slide_Maths
 import Slide_LiveCoding
 
 WindowSize = (1024, 600)
@@ -35,12 +36,17 @@ class Engine(arcade.Window):
                        Slide_GameLoop.Slide(WindowSize),
                        Slide_OOP.Slide(WindowSize),
                        Slide_OOP.Slide2(WindowSize),
+                       Slide_Maths.Slide1(WindowSize),
+                       Slide_Maths.Slide2(WindowSize),
+                       Slide_Maths.Slide3(WindowSize),
+                       Slide_Maths.Slide4(WindowSize),
+                       Slide_Maths.Slide5(WindowSize),
                        ]
 
         self.WindowSize = WindowSize
         self.currentStage = self.stages[0]
-        self.currentStage = self.stages[-2]      # debugging
-        self.currentStage = self.stages[4]      # debugging
+        self.currentStage = self.stages[-1]      # debugging
+        self.currentStage = self.stages[12]      # debugging
         self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
