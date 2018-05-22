@@ -214,25 +214,41 @@ class Slide3(SlideTemplate):
         title = "Stage 4"
         subtitle = "Mathematics - Collision Detection"
 
-        slides = [[Text(50, flip_y(WindowSize, 70), """- Collision Detection is the algorithm used to see if two sprites intersects
-- A sprite is an image of a game object"""),],
-                  [Text(50, flip_y(WindowSize, 70), """- Are these two sprites touching?
+        slides = [[
+                   Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7),
+                   Image(100, flip_y(WindowSize, 170), "mario_sprite.jpg", scale=0.45),
+                   Text(50, flip_y(WindowSize, 70), """- Collision Detection is the algorithm used to see if two sprites intersects
+- A sprite is an image of a game object"""),
+                   ],
+                  [
+                   Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7),
+                   Image(100, flip_y(WindowSize, 170), "mario_sprite.jpg", scale=0.45),
+                   Text(50, flip_y(WindowSize, 70), """- Are these two sprites touching?
 - How can the computer tell that these sprites are touching?"""),],
-                  [Text(50, flip_y(WindowSize, 70), """- Are these two sprites touching?
+                  [
+                   Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7),
+                   Image(100, flip_y(WindowSize, 170), "mario_sprite.jpg", scale=0.45),
+                   Text(50, flip_y(WindowSize, 70), """- Are these two sprites touching?
 - How can the computer tell that these sprites are touching?
 - We can use maths to detect if they touched. """),],
-                  [Text(50, flip_y(WindowSize, 70), """- To simplify the maths, sprites are represented by the computer as rectangles"""),],
-                  [Text(50, flip_y(WindowSize, 70), """- If the rectangle overlaps, it means there is a collision. An event is triggered
+                  [Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7, border=1),
+                   Image(100, flip_y(WindowSize, 170), "mario_sprite.jpg", scale=0.45, border=1),
+                   Text(50, flip_y(WindowSize, 70), """- To simplify the maths, sprites are represented by the computer as rectangles"""),],
+                  [Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7, border=1),
+                   Image(600, flip_y(WindowSize, 170), "mario_sprite.jpg", scale=0.45, border=1, transition="left", transition_distance=500),
+                   Text(50, flip_y(WindowSize, 70), """- If the rectangle overlaps, it means there is a collision. An event is triggered
 - Events are anything that can affect the game state"""),],
-                  [Text(50, flip_y(WindowSize, 70), """- The event here, according to the game rules, is that Mario loses."""),],
+                  [Image(620, flip_y(WindowSize, 130), "mario_monster.jpg", scale=0.7),
+                   Image(530, flip_y(WindowSize, 160), "mario_lose.png", scale=3),
+                   Text(50, flip_y(WindowSize, 70), """- The event here, according to the game rules, is that Mario loses."""),],
                   [Text(50, flip_y(WindowSize, 70), """- The formula to check if two rectangles have collided is:"""),],
-                  [Text(50, flip_y(WindowSize, 70), """- The formula to check if two rectangles have collided is:
-
+                  [Text(50, flip_y(WindowSize, 70), """- The formula to check if two rectangles have collided is:"""),
+                   Text(55, flip_y(WindowSize, 70), """
 (box1.x + box1.width >= box2.x and
  box1.x <= box2.x + box2.width and
  box1.y + box1.height >= box2.y and
  box1.y <= box2.y + box2.height)
-"""),],
+""", kwargs={"font_size": 30, "font_name": "consolas"})],
                  ]
 
         super().__init__(WindowSize, title, subtitle, slides)
@@ -250,6 +266,8 @@ class Slide5(SlideTemplate):
         title = "Stage 4"
         subtitle = "Mathematics - Collision Detection"
         slides = [[Text(50, flip_y(WindowSize, 70), """- A key factor in good game design is to realize that you can use multiple collision boxes
-- You can also make some collision boxes differently sized from the sprite to make the game more enjoyable"""),]]
+- You can also make some collision boxes differently sized from the sprite to make the game more enjoyable\n
+
+source: https://gamedev.stackexchange.com/a/57006/614"""),]]
 
         super().__init__(WindowSize, title, subtitle, slides)
