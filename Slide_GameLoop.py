@@ -15,7 +15,7 @@ class Slide(SlideTemplate):
 - Infinite loop
 - Runs after game world setup
 - Each iteration is called a "frame" """),
-                   Image(500, flip_y(WindowSize, 70), "game_loop.png")],
+                   Image(500, flip_y(WindowSize, 70), "game_loop.png", scale=1.2)],
 
                   ]
 
