@@ -249,6 +249,21 @@ class Slide3(SlideTemplate):
  box1.y + box1.height >= box2.y and
  box1.y <= box2.y + box2.height)
 """, kwargs={"font_size": 30, "font_name": "consolas"})],
+                  [Text(50, flip_y(WindowSize, 70), """- The formula to check if two rectangles have collided is:"""),
+                   Text(55, flip_y(WindowSize, 70), """
+(box1.x + box1.width >= box2.x and
+ box1.x <= box2.x + box2.width and
+ box1.y + box1.height >= box2.y and
+ box1.y <= box2.y + box2.height)
+""", kwargs={"font_size": 30, "font_name": "consolas"}),
+                   Text(50, flip_y(WindowSize, 350), """- Note that this formula is when (0, 0) is at top-left.""", kwargs={"italic": True})],
+                 [Text(50, flip_y(WindowSize, 70), """- If (0, 0) is at lower-left, use this formula:"""),
+                   Text(55, flip_y(WindowSize, 70), """
+(box1.x + box1.width >= box2.x and
+ box1.x <= box2.x + box2.width and
+ box1.y - box1.height <= box2.y and
+ box1.y >= box2.y - box2.height)
+""", kwargs={"font_size": 30, "font_name": "consolas"}),]
                  ]
 
         super().__init__(WindowSize, title, subtitle, slides)
@@ -273,7 +288,15 @@ class Slide4(SlideTemplate):
 
  box1.y <= box2.y + box2.height)"""
         kwargs = {"font_size": 20, "font_name": "consolas", "color": arcade.color.BLACK, "align": "left", "anchor_x": "left", }
-        self.formula = Text(205, flip_y(self.WindowSize, 170), formula_text, kwargs=kwargs)
+        self.formula = Text(105, flip_y(self.WindowSize, 170), formula_text, kwargs=kwargs)
+
+        kwargs = {"font_size": 12, "color": arcade.color.BLACK, "align": "left", "anchor_x": "left", }
+        self.instruction = Text(305, flip_y(self.WindowSize, 150), "Move using WASD and arrow keys. SPACE to go to next slide", kwargs=kwargs)
+
+        self.check1 = Text(75, flip_y(self.WindowSize, 200), "\N{heavy check mark}", kwargs=kwargs)
+        self.check2 = Text(75, flip_y(self.WindowSize, 260), "\N{heavy check mark}", kwargs=kwargs)
+        self.check3 = Text(75, flip_y(self.WindowSize, 320), "\N{heavy check mark}", kwargs=kwargs)
+        self.check4 = Text(75, flip_y(self.WindowSize, 380), "\N{heavy check mark}", kwargs=kwargs)
 
         self.mario = Avatar("mario_sprite.jpg", 0.45)
         self.mario.left = 300
@@ -285,8 +308,10 @@ class Slide4(SlideTemplate):
     def draw(self):
         super().draw()
 
+        self.instruction.draw()
+
         border = 1
-        for sprite in [self.mario, self.bowser]:
+        for sprite in [self.bowser, self.mario]:
             arcade.draw_lrtb_rectangle_filled(sprite.left - border, sprite.right + border,
                                               sprite.top + border, sprite.bottom - border,
                                               arcade.color.BLACK)
@@ -294,29 +319,49 @@ class Slide4(SlideTemplate):
 
         self.formula.draw()
 
-        formula_text  = """(box1.x + box1.width >= box2.x and
+        data = (self.mario.left, self.mario.width, self.bowser.left,
+                self.mario.left, self.bowser.left, self.bowser.width,
+                flip_y(self.WindowSize, self.mario.top), self.mario.height, flip_y(self.WindowSize, self.bowser.top),
+                flip_y(self.WindowSize, self.mario.top), flip_y(self.WindowSize, self.bowser.top), self.bowser.height,)
+        introspection_text = """ {:^6}   {:^10}    {:^6}
 
- box1.x <= box2.x + box2.width and
+ {:^6}    {:^6}   {:^10}
 
- box1.y + box1.height >= box2.y and
+ {:^6}  {:^11}     {:^6}
 
- box1.y <= box2.y + box2.height)"""
-        kwargs = {"font_size": 20, "font_name": "consolas", "color": arcade.color.BLACK, "align": "left", "anchor_x": "left", }
-        self.formula = Text(105, flip_y(self.WindowSize, 170), formula_text, kwargs=kwargs)
+ {:^6}    {:^6}   {:^12}""".format(*data)
+        kwargs = {"font_size": 20, "font_name": "consolas", "color": arcade.color.BLUE, "align": "left", "anchor_x": "left", }
+        introspection = Text(105, flip_y(self.WindowSize, 195), introspection_text, kwargs=kwargs)
+        introspection.draw()
+
+        if self.mario.left + self.mario.width >= self.bowser.left:
+            self.check1.draw()
+        if self.mario.left <= self.bowser.left + self.bowser.width:
+            self.check2.draw()
+        if flip_y(self.WindowSize, self.mario.top) + self.mario.height >= flip_y(self.WindowSize, self.bowser.top):
+#        if self.mario.top - self.mario.height <= self.bowser.top:
+            self.check3.draw()
+        if flip_y(self.WindowSize, self.mario.top) <= flip_y(self.WindowSize, self.bowser.top) + self.bowser.height:
+#        if self.mario.top >= self.bowser.top - self.bowser.height:
+            self.check4.draw()
 
     def update(self, delta_time):
         self.mario.update()
         self.bowser.update()
 
+        return self.gameState
+
     def on_key_press(self, key, modifiers):
         self.mario.move_WASD(key, modifiers, keydown=True)
         self.bowser.move(key, modifiers, keydown=True)
-        #self.gameState = GameState.FINISHED_STAGE
 
     def on_key_release(self, key, modifiers):
         self.mario.move_WASD(key, modifiers, keydown=False)
         self.bowser.move(key, modifiers, keydown=False)
 
+        if key == arcade.key.SPACE:
+            # we put this here to prevent skipping the next slide (if this was in on_key_press)
+            self.gameState = GameState.FINISHED_STAGE
 
 class Slide5(SlideTemplate):
     def __init__(self, WindowSize):
