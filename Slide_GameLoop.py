@@ -1,8 +1,8 @@
 from helper import (flip_y,
                     Text,
-                    Image,
                     SlideTemplate)
 
+from hack import Image
 
 class Slide(SlideTemplate):
     def __init__(self, WindowSize):

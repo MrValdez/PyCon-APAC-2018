@@ -130,7 +130,7 @@ class SlideTemplate(Screen):
                     element.kwargs["align"] = "left"
                     element.kwargs["anchor_x"] = "left"
                     element.kwargs["color"] = arcade.color.BLACK
-                if type(element) is Image:
+                if issubclass(type(element), arcade.Sprite):
                     element.top -= self.header_height
                     element.target_position[1] -= self.header_height
 
