@@ -29,6 +29,7 @@ class Slide2(SlideTemplate):
         slides = []
 
         self.animations = [self.animation1_draw, self.animation2_draw]
+        self.animations = [self.animation2_draw]
 
         super().__init__(WindowSize, title, subtitle, slides)
 
@@ -59,7 +60,7 @@ class Slide2(SlideTemplate):
 
     def animation1_draw(self):
         # y axis
-        start_x, start_y = 100, 100
+        start_x, start_y = 100, 100 - 5     # -5 from (border_width / 2)
         end_x, target_y = 100, 400
 
         end_y = compute_linear_interpolation(start_y, target_y, self.currentDelta, self.targetDelta)
@@ -79,18 +80,38 @@ class Slide2(SlideTemplate):
         self.currentDelta = min(self.currentDelta, self.targetDelta)
 
     def animation2_draw(self):
+        tick_step = 30
+        axis_size = 10
+
         # y axis
-        start_x, start_y = 100, 100
-        end_x, end_y = 100, 400
+        start_x, start_y = 100, 100 - 5
+        end_x, end_y = 100, 400 - 4         # simple hack to put the last tick end at the edge
         arcade.draw_commands.draw_line(start_x, start_y, end_x, end_y,
                                        arcade.color.BLACK, border_width=10)
+
+        def is_within_delta_percentage(start, current, end):
+            # animation for stepping
+            per = (current - start) / (end - start)
+            return per > self.currentDelta / self.targetDelta
+
+        for y in range(start_y + tick_step, end_y, tick_step):
+            if is_within_delta_percentage(start_y, y, end_y):
+                break
+            arcade.draw_commands.draw_line(start_x - axis_size, y, start_x + axis_size, y,
+                                           arcade.color.BLACK, border_width=2)
 
         # x axis
         start_x, start_y = 100, 100
-        end_x, end_y = 600, 100
+        end_x, end_y = 600 + 10, 100        # simple hack to put the last tick end at the edge
         arcade.draw_commands.draw_line(start_x, start_y, end_x, end_y,
                                        arcade.color.BLACK, border_width=10)
 
+        for x in range(start_x + tick_step, end_x + tick_step, tick_step):
+            if is_within_delta_percentage(start_x, x, end_x):
+                break
+
+            arcade.draw_commands.draw_line(x, start_y - axis_size, x, start_y + axis_size,
+                                           arcade.color.BLACK, border_width=2)
 
         self.currentDelta += 0.1
         self.currentDelta = min(self.currentDelta, self.targetDelta)
