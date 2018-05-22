@@ -29,8 +29,10 @@ class Slide2(SlideTemplate):
 
         slides = []
 
-        self.animations = [self.animation4_draw]
-        self.animations = [self.animation1_draw, self.animation2_draw, self.animation3_draw, self.animation4_draw]
+        self.animations = [self.animation1_draw, self.animation2_draw, self.animation3_draw,
+                           self.animation4_draw, self.animation5_draw, self.animation6_draw]
+        self.animations = [self.animation6_draw]
+        self.animations = [self.animation4_draw, self.animation5_draw]
 
         super().__init__(WindowSize, title, subtitle, slides)
 
@@ -49,6 +51,13 @@ class Slide2(SlideTemplate):
         self.mario_sprite = Image(0, 0, "mario_sprite.png", scale=2.3)
         self.mario_box = Image(0, 0, "mario_box.png", scale=2.3)
         self.mario_score = Image(0, 0, "mario_score.png", scale=2.3)
+
+        animation5_text = """Some game libraries (such as Arcade) have their
+Y axis origin at the bottom left.
+
+The maths to flip the y-coordinates is just (height - y)"""
+        kwargs = {"color": arcade.color.GRAY, "align": "left", "anchor_x": "left", "font_size": 15}
+        self.coordinate_note = Text(400, 400, animation5_text, kwargs=kwargs)
 
     def resetAnimation(self):
         self.targetDelta = 10
@@ -148,11 +157,15 @@ class Slide2(SlideTemplate):
         return (self.x_axis[0] + (x * self.tick_step),
                 self.y_axis[1] + (y * self.tick_step))
 
-    def _draw_point(self, x, y):
+    def _draw_point(self, x, y, reverse_y_axis=False):
         offset = 10
         pixel_x, pixel_y = self._get_pos_in_coord(x, y)
 
-        text = "({}, {})".format(x, 10 - y)
+        if reverse_y_axis:
+            text = "({}, {})".format(x, y)
+        else:
+            text = "({}, {})".format(x, 10 - y)
+
         arcade.draw_commands.draw_circle_filled(pixel_x, pixel_y, 5, arcade.color.BLACK)
         arcade.draw_text(text, pixel_x, pixel_y + offset,
                          font_size=16, color=arcade.color.BLACK, anchor_x="center", align="center", anchor_y="bottom")
@@ -161,23 +174,34 @@ class Slide2(SlideTemplate):
         self._draw_graph()
 
         self._draw_point(1, 10)
-        self._draw_point(5, 5)
+        self._draw_point(5, 6)
         self._draw_point(14, 3)
+
+    def _draw_sprite(self, sprite, x, y, reverse_y_axis=False):
+        offset = 10
+        self._draw_point(x, y, reverse_y_axis)
+        pixel_x, pixel_y = self._get_pos_in_coord(x, y)
+        sprite.left, sprite.top = pixel_x - offset, pixel_y + offset
+        sprite.draw()
 
     def animation4_draw(self):
         self._draw_graph()
 
-        def draw_sprite(sprite, x, y):
-            offset = 10
-            self._draw_point(x, y)
-            pixel_x, pixel_y = self._get_pos_in_coord(x, y)
-            sprite.left, sprite.top = pixel_x - offset, pixel_y + offset
-            sprite.draw()
+        self._draw_sprite(self.mario_sprite, 14, 3)
+        self._draw_sprite(self.mario_box, 5, 6)
+        self._draw_sprite(self.mario_score, 1, 10)
 
-        draw_sprite(self.mario_sprite, 14, 3)
-        draw_sprite(self.mario_box, 5, 5)
-        draw_sprite(self.mario_score, 1, 10)
+    def animation5_draw(self):
+        self._draw_graph()
 
+        self._draw_sprite(self.mario_sprite, 14, 3, reverse_y_axis=True)
+        self._draw_sprite(self.mario_box, 5, 6, reverse_y_axis=True)
+        self._draw_sprite(self.mario_score, 1, 10, reverse_y_axis=True)
+
+        self.coordinate_note.draw()
+
+    def animation6_draw(self):
+        pass
 
 class Slide3(SlideTemplate):
     def __init__(self, WindowSize):
