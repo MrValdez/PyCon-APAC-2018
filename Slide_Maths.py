@@ -2,7 +2,8 @@ import arcade
 from helper import (flip_y,
                     Text,
                     SlideTemplate,
-                    GameState)
+                    GameState,
+                    Avatar)
 
 from hack import Image
 
@@ -58,7 +59,6 @@ The maths to flip the y-coordinates is just (height - y)"""
         kwargs = {"color": arcade.color.GRAY, "align": "left", "anchor_x": "left", "font_size": 15}
         self.coordinate_note = Text(400, 400, animation5_text, kwargs=kwargs)
 
-#        kwargs = {"color": arcade.color.GRAY, "align": "left", "anchor_x": "left", "font_size": 15}
         self.resolution_text = Text(370, 330, "640 x 480\n800 x 600\n1024 x 768")
 
     def resetAnimation(self):
@@ -253,6 +253,7 @@ class Slide3(SlideTemplate):
 
         super().__init__(WindowSize, title, subtitle, slides)
 
+
 class Slide4(SlideTemplate):
     def __init__(self, WindowSize):
         title = "Stage 4"
@@ -260,6 +261,62 @@ class Slide4(SlideTemplate):
         slides = []
 
         super().__init__(WindowSize, title, subtitle, slides)
+
+    def load(self):
+        super().load()
+
+        formula_text  = """(box1.x + box1.width >= box2.x and
+
+ box1.x <= box2.x + box2.width and
+
+ box1.y + box1.height >= box2.y and
+
+ box1.y <= box2.y + box2.height)"""
+        kwargs = {"font_size": 20, "font_name": "consolas", "color": arcade.color.BLACK, "align": "left", "anchor_x": "left", }
+        self.formula = Text(205, flip_y(self.WindowSize, 170), formula_text, kwargs=kwargs)
+
+        self.mario = Avatar("mario_sprite.jpg", 0.45)
+        self.mario.left = 300
+        self.mario.top = 130
+        self.bowser = Avatar("mario_monster.jpg", 0.7)
+        self.bowser.left = 700
+        self.bowser.top = 300
+
+    def draw(self):
+        super().draw()
+
+        border = 1
+        for sprite in [self.mario, self.bowser]:
+            arcade.draw_lrtb_rectangle_filled(sprite.left - border, sprite.right + border,
+                                              sprite.top + border, sprite.bottom - border,
+                                              arcade.color.BLACK)
+            sprite.draw()
+
+        self.formula.draw()
+
+        formula_text  = """(box1.x + box1.width >= box2.x and
+
+ box1.x <= box2.x + box2.width and
+
+ box1.y + box1.height >= box2.y and
+
+ box1.y <= box2.y + box2.height)"""
+        kwargs = {"font_size": 20, "font_name": "consolas", "color": arcade.color.BLACK, "align": "left", "anchor_x": "left", }
+        self.formula = Text(105, flip_y(self.WindowSize, 170), formula_text, kwargs=kwargs)
+
+    def update(self, delta_time):
+        self.mario.update()
+        self.bowser.update()
+
+    def on_key_press(self, key, modifiers):
+        self.mario.move_WASD(key, modifiers, keydown=True)
+        self.bowser.move(key, modifiers, keydown=True)
+        #self.gameState = GameState.FINISHED_STAGE
+
+    def on_key_release(self, key, modifiers):
+        self.mario.move_WASD(key, modifiers, keydown=False)
+        self.bowser.move(key, modifiers, keydown=False)
+
 
 class Slide5(SlideTemplate):
     def __init__(self, WindowSize):

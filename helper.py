@@ -120,6 +120,19 @@ class Avatar(arcade.Sprite):
         if key == arcade.key.RIGHT:
             self.change_x += speed
 
+    def move_WASD(self, key, modifier, keydown):
+        speed = self.speed
+        if not keydown:
+            speed *= -1
+
+        if key == arcade.key.W:
+            self.change_y += speed
+        if key == arcade.key.S:
+            self.change_y += -speed
+        if key == arcade.key.A:
+            self.change_x += -speed
+        if key == arcade.key.D:
+            self.change_x += speed
 
 class SlideTemplate(Screen):
     def __init__(self, WindowSize, title, subtitle, slides):
