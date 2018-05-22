@@ -55,24 +55,25 @@ class Image(arcade.Sprite):
     
     transitions: left, right, bottom
     """
-    
-    def __init__(self, left, top, filename, transition=None, border=0):
+    # todo: it would be nice to soft code transition_distance to the window's width/height
+    def __init__(self, left, top, filename, transition=None, border=0,
+                 transition_distance=1000):
         super().__init__(filename)
         self.border = border
-        self._init_transition(left, top, transition)
+        self._init_transition(left, top, transition, transition_distance)
 
-    def _init_transition(self, left, top, transition):
+    def _init_transition(self, left, top, transition, transition_distance):
         self.target_position = [left, top]
 
         if transition == "left":
-            self.left = left - 1000     # todo: it would be nice to soft code this to the window's width
+            self.left = left - transition_distance
         elif transition == "right":
-            self.left = left + 1000     # todo: it would be nice to soft code this to the window's position
+            self.left = left + transition_distance
         else:
             self.left = left
 
         if transition == "bottom":
-            self.top = top - 1000
+            self.top = top - transition_distance
         else:
             self.top = top
 
