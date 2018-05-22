@@ -29,8 +29,8 @@ class Slide2(SlideTemplate):
 
         slides = []
 
-        self.animations = [self.animation1_draw, self.animation2_draw, self.animation3_draw, self.animation4_draw]
         self.animations = [self.animation4_draw]
+        self.animations = [self.animation1_draw, self.animation2_draw, self.animation3_draw, self.animation4_draw]
 
         super().__init__(WindowSize, title, subtitle, slides)
 
@@ -46,9 +46,9 @@ class Slide2(SlideTemplate):
         self.y_axis = [100, 100 - 5, 100, 400 - 4]
         self.x_axis = [100, 100, 600 + 10, 100]
 
-        self.mario_sprite = arcade.Sprite("mario_sprite.png", 2)
-        self.mario_box = arcade.Sprite("mario_box.png", 2)
-        self.mario_score = arcade.Sprite("mario_score.png", 2)
+        self.mario_sprite = Image(0, 0, "mario_sprite.png", scale=2.3)
+        self.mario_box = Image(0, 0, "mario_box.png", scale=2.3)
+        self.mario_score = Image(0, 0, "mario_score.png", scale=2.3)
 
     def resetAnimation(self):
         self.targetDelta = 10

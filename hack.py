@@ -146,11 +146,11 @@ def load_texture(file_name: str, x: float=0, y: float=0,
 load_texture.texture_cache = dict()
 
 class Image(helper.Image):
-    def __init__(self, left, top, filename, transition=None):
+    def __init__(self, left, top, filename, transition=None, scale=1):
         super().__init__(left, top, filename, transition)
 
         #copypasted from arcade.sprite.Sprite.__init__
-        self.texture = load_texture(filename)
+        self.texture = load_texture(filename, scale=scale)
 
         self.textures = [self.texture]
         self.width = self.texture.width * self.scale
