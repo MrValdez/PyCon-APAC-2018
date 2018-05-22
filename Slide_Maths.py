@@ -367,9 +367,17 @@ class Slide5(SlideTemplate):
     def __init__(self, WindowSize):
         title = "Stage 4"
         subtitle = "Mathematics - Collision Detection"
-        slides = [[Text(50, flip_y(WindowSize, 70), """- A key factor in good game design is to realize that you can use multiple collision boxes
-- You can also make some collision boxes differently sized from the sprite to make the game more enjoyable\n
-
-source: https://gamedev.stackexchange.com/a/57006/614"""),]]
+        slides = [
+                    [Text(50, flip_y(WindowSize, 10), """- A key factor in good game design is to realize that you can use multiple collision boxes""", {"font_size": 15}),
+                     Image(100, flip_y(WindowSize, 60), "hitbox1.jpg", scale=0.7),
+                     Text(50, flip_y(WindowSize, 400), """Source: https://twitter.com/al_rikir/status/996638753241423872?s=21""", {"font_size": 10, "italic": True})],
+                    [Text(50, flip_y(WindowSize, 10), """- A key factor in good game design is to realize that you can use multiple collision boxes""", {"font_size": 15}),
+                     Image(100, flip_y(WindowSize, 60), "hitbox2.jpg", scale=1),
+                     Text(50, flip_y(WindowSize, 400), """Source: https://twitter.com/al_rikir/status/996638753241423872?s=21""", {"font_size": 10, "italic": True})],
+                    [Text(50, flip_y(WindowSize, 10), """- You can also make some collision boxes differently sized from the sprite to make
+the game much more enjoyable.""", {"font_size": 15}),
+                     Image(140, flip_y(WindowSize, 80), "mario_hitbox.png", scale=1.5),
+                     Text(50, flip_y(WindowSize, 410), """Source: https://gamedev.stackexchange.com/a/57006/614""", {"font_size": 10, "italic": True})],
+                 ]
 
         super().__init__(WindowSize, title, subtitle, slides)
