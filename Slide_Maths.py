@@ -4,6 +4,7 @@ from helper import (flip_y,
                     SlideTemplate,
                     GameState)
 
+from hack import Image
 
 class Slide1(SlideTemplate):
     def __init__(self, WindowSize):
@@ -28,8 +29,8 @@ class Slide2(SlideTemplate):
 
         slides = []
 
-        self.animations = [self.animation1_draw, self.animation2_draw]
-        self.animations = [self.animation2_draw]
+        self.animations = [self.animation1_draw, self.animation2_draw, self.animation3_draw, self.animation4_draw]
+        self.animations = [self.animation4_draw]
 
         super().__init__(WindowSize, title, subtitle, slides)
 
@@ -37,6 +38,17 @@ class Slide2(SlideTemplate):
         super().load()
         self.currentAnimation = 0
         self.resetAnimation()
+
+        self.tick_step = 30
+        self.axis_size = 10
+
+        # variables for y and x axis
+        self.y_axis = [100, 100 - 5, 100, 400 - 4]
+        self.x_axis = [100, 100, 600 + 10, 100]
+
+        self.mario_sprite = arcade.Sprite("mario_sprite.png", 2)
+        self.mario_box = arcade.Sprite("mario_box.png", 2)
+        self.mario_score = arcade.Sprite("mario_score.png", 2)
 
     def resetAnimation(self):
         self.targetDelta = 10
@@ -79,10 +91,26 @@ class Slide2(SlideTemplate):
         self.currentDelta += 0.1
         self.currentDelta = min(self.currentDelta, self.targetDelta)
 
-    def animation2_draw(self):
-        tick_step = 30
-        axis_size = 10
+    def _draw_graph(self):
+        # y axis
+        start_x, start_y, end_x, end_y = self.y_axis
+        arcade.draw_commands.draw_line(start_x, start_y, end_x, end_y,
+                                       arcade.color.BLACK, border_width=10)
 
+        for y in range(start_y + self.tick_step, end_y, self.tick_step):
+            arcade.draw_commands.draw_line(start_x - self.axis_size, y, start_x + self.axis_size, y,
+                                           arcade.color.GRAY, border_width=4)
+
+        # x axis
+        start_x, start_y, end_x, end_y = self.x_axis
+        arcade.draw_commands.draw_line(start_x, start_y, end_x, end_y,
+                                       arcade.color.BLACK, border_width=10)
+
+        for x in range(start_x + self.tick_step, end_x + self.tick_step, self.tick_step):
+            arcade.draw_commands.draw_line(x, start_y - self.axis_size, x, start_y + self.axis_size,
+                                           arcade.color.GRAY, border_width=4)
+
+    def animation2_draw(self):
         # y axis
         start_x, start_y = 100, 100 - 5
         end_x, end_y = 100, 400 - 4         # simple hack to put the last tick end at the edge
@@ -94,11 +122,11 @@ class Slide2(SlideTemplate):
             per = (current - start) / (end - start)
             return per > self.currentDelta / self.targetDelta
 
-        for y in range(start_y + tick_step, end_y, tick_step):
+        for y in range(start_y + self.tick_step, end_y, self.tick_step):
             if is_within_delta_percentage(start_y, y, end_y):
                 break
-            arcade.draw_commands.draw_line(start_x - axis_size, y, start_x + axis_size, y,
-                                           arcade.color.BLACK, border_width=2)
+            arcade.draw_commands.draw_line(start_x - self.axis_size, y, start_x + self.axis_size, y,
+                                           arcade.color.GRAY, border_width=4)
 
         # x axis
         start_x, start_y = 100, 100
@@ -106,15 +134,50 @@ class Slide2(SlideTemplate):
         arcade.draw_commands.draw_line(start_x, start_y, end_x, end_y,
                                        arcade.color.BLACK, border_width=10)
 
-        for x in range(start_x + tick_step, end_x + tick_step, tick_step):
+        for x in range(start_x + self.tick_step, end_x + self.tick_step, self.tick_step):
             if is_within_delta_percentage(start_x, x, end_x):
                 break
 
-            arcade.draw_commands.draw_line(x, start_y - axis_size, x, start_y + axis_size,
-                                           arcade.color.BLACK, border_width=2)
+            arcade.draw_commands.draw_line(x, start_y - self.axis_size, x, start_y + self.axis_size,
+                                           arcade.color.GRAY, border_width=4)
 
         self.currentDelta += 0.1
         self.currentDelta = min(self.currentDelta, self.targetDelta)
+
+    def _get_pos_in_coord(self, x, y):
+        return (self.x_axis[0] + (x * self.tick_step),
+                self.y_axis[1] + (y * self.tick_step))
+
+    def _draw_point(self, x, y):
+        offset = 10
+        pixel_x, pixel_y = self._get_pos_in_coord(x, y)
+
+        text = "({}, {})".format(x, 10 - y)
+        arcade.draw_commands.draw_circle_filled(pixel_x, pixel_y, 5, arcade.color.BLACK)
+        arcade.draw_text(text, pixel_x, pixel_y + offset,
+                         font_size=16, color=arcade.color.BLACK, anchor_x="center", align="center", anchor_y="bottom")
+
+    def animation3_draw(self):
+        self._draw_graph()
+
+        self._draw_point(1, 10)
+        self._draw_point(5, 5)
+        self._draw_point(14, 3)
+
+    def animation4_draw(self):
+        self._draw_graph()
+
+        def draw_sprite(sprite, x, y):
+            offset = 10
+            self._draw_point(x, y)
+            pixel_x, pixel_y = self._get_pos_in_coord(x, y)
+            sprite.left, sprite.top = pixel_x - offset, pixel_y + offset
+            sprite.draw()
+
+        draw_sprite(self.mario_sprite, 14, 3)
+        draw_sprite(self.mario_box, 5, 5)
+        draw_sprite(self.mario_score, 1, 10)
+
 
 class Slide3(SlideTemplate):
     def __init__(self, WindowSize):
