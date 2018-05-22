@@ -146,8 +146,8 @@ def load_texture(file_name: str, x: float=0, y: float=0,
 load_texture.texture_cache = dict()
 
 class Image(helper.Image):
-    def __init__(self, left, top, filename, transition=None, scale=1):
-        super().__init__(left, top, filename, transition)
+    def __init__(self, left, top, filename, transition=None, scale=1, border=0):
+        super().__init__(left, top, filename, transition, border)
 
         #copypasted from arcade.sprite.Sprite.__init__
         self.texture = load_texture(filename, scale=scale)
@@ -155,3 +155,6 @@ class Image(helper.Image):
         self.textures = [self.texture]
         self.width = self.texture.width * self.scale
         self.height = self.texture.height * self.scale
+
+        # fix to helper.Image thinking that we move if scale is changed
+        self._init_transition(left, top, transition)

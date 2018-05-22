@@ -56,8 +56,12 @@ class Image(arcade.Sprite):
     transitions: left, right, bottom
     """
     
-    def __init__(self, left, top, filename, transition=None):
+    def __init__(self, left, top, filename, transition=None, border=0):
         super().__init__(filename)
+        self.border = border
+        self._init_transition(left, top, transition)
+
+    def _init_transition(self, left, top, transition):
         self.target_position = [left, top]
 
         if transition == "left":
@@ -86,6 +90,12 @@ class Image(arcade.Sprite):
 
         super().update()
 
+    def draw(self):
+        if self.border:
+            arcade.draw_lrtb_rectangle_filled(self.left - self.border, self.right + self.border,
+                                              self.top + self.border, self.bottom - self.border,
+                                              arcade.color.BLACK)
+        super().draw()
 
 class Avatar(arcade.Sprite):
     def __init__(self, *args):
@@ -142,7 +152,7 @@ class SlideTemplate(Screen):
     def update(self, delta_time):
         if self.slides:
             for element in self.slides[self.currentSlide]:
-                if type(element) is Image:
+                if issubclass(type(element), Image):
                     element.update()
 
         return self.gameState
