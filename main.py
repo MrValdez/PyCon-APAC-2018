@@ -71,7 +71,7 @@ class Engine(arcade.Window):
 
         if self.gameState == GameState.RUNNING:
             returned_game_state = self.currentStage.update(delta_time)
-            if returned_game_state in GameState:
+            if returned_game_state and returned_game_state in GameState:
                 self.gameState = returned_game_state
 
             if self.gameState == GameState.NEXT_STAGE:
