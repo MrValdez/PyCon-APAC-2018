@@ -63,16 +63,20 @@ class Stage1(Screen):
         cave = arcade.Sprite("LPC_cliffs_grass.png", image_x=1, image_y=288 - 140, image_width=30, image_height=45, scale=2.4)
         target_cliff = top_row[3]
         cave.left = target_cliff[0] + 14
-        cave.top = target_cliff[1] - 83
+        cave.top = target_cliff[1] - 85
         self.floor.append(cave)
+        self.cave = cave
 
     def load(self):
         arcade.set_background_color(arcade.color.AMAZON)
         self.gameState = GameState.RUNNING
 
     def update(self, delta_time):
-#        self.sprites.update()
         self.physics.update()
+
+        if arcade.check_for_collision(self.avatar, self.cave):
+            return GameState.FINISHED_STAGE
+
         return self.gameState
 
     def draw(self):
