@@ -60,9 +60,9 @@ This is the one hour story of how PyCon APAC 2018 made a game.
         arcade.set_background_color(arcade.color.BLACK)
         self.gameState = GameState.RUNNING
         self.scroll = 0
-        self.start_timer = 7
-        self.scroll_speed = 0.7
-        self.end_timer = 5
+        self.start_timer = 4
+        self.scroll_speed = 1
+        self.end_timer = 3
 
         #debug values:
         #self.start_timer = 0

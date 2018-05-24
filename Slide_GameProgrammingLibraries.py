@@ -13,7 +13,14 @@ class Slide(SlideTemplate):
   - Pygame
   - Arcade
   - Ren'py
-  - many more"""),
+  - pyglet
+  - many more
+
+Game programming frameworks/engines with Python
+  - Godot Engine
+  - Cocos2d
+  - Panda3d
+  """),
                    Text(600, flip_y(WindowSize, 70), """Platforms
   - PC
   - Mac

@@ -22,19 +22,12 @@ class Stage1c(SlideTemplate):
                    ],
                   [Text(50, flip_y(WindowSize, 40), """I'm a video game programming hobbyist
 
-- Use game programming to teach programming
-- 6 year Global Game Jam veteran
-    - Make a game in ~48 hours
-    - Every January
-"""),
-                   Image(600, flip_y(WindowSize, 150), "crunch time.jpg", scale=0.8),
-                   Image(580, flip_y(WindowSize, 10), "Game Jam 2011.jpg", transition="right", scale=0.8)],
-                  [Text(50, flip_y(WindowSize, 40), """I'm a video game programming hobbyist
-
 - Active board member at Python Philippines
 - https://mrvaldez.ph
 - https://github.com/mrvaldez
 - @MrValdez
-"""),]]
+"""),
+                   Image(600, flip_y(WindowSize, 30), "mrvaldez.png", scale=0.6),]
+                  ]
 
         super().__init__(WindowSize, title, subtitle, slides)

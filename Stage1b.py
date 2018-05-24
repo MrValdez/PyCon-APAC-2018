@@ -13,6 +13,8 @@ class Stage1b(SlideTemplate):
         slides = [
                   [Text(50, flip_y(WindowSize, 40), "Who here play video games?")],
 
+                  [Text(50, flip_y(WindowSize, 40), "Who here play video games?")],     # hack: run twice because of keypress from previous stage
+
                   [Text(50, flip_y(WindowSize, 40), "Who here play video games?"),
                    Image(100, flip_y(WindowSize, 100), "video_game1.png", scale=1.4, transition="left")],
 
