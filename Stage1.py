@@ -17,7 +17,7 @@ class Stage1(Screen):
         ]
         self.WindowSize = WindowSize
 
-        self.avatar = Avatar("crono_back.gif")
+        self.avatar = Avatar("avatar.png")
         self.avatar.center_x = 860
         self.avatar.center_y = 120
 

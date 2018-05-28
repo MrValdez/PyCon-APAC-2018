@@ -18,11 +18,11 @@ class Slide(SlideTemplate):
 
                   [Text(50, flip_y(WindowSize, 70), """1. Game Library
 2. Game Programming Design Patterns: Game loop
-3. Object Oriented Programming""")],
+3. Object Oriented Programming: Game objects""")],
 
                   [Text(50, flip_y(WindowSize, 70), """1. Game Library
 2. Game Programming Design Patterns: Game loop
-3. Object Oriented Programming
+3. Object Oriented Programming: Game objects
 4. Maths""")],
                  ]
 
