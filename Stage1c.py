@@ -13,16 +13,8 @@ class Stage1c(SlideTemplate):
         slides = [
                   [Text(50, flip_y(WindowSize, 40), """I'm a video game programming hobbyist
 
-- Use game programming to teach programming
-- 6 year Global Game Jam veteran
-    - Make a game in ~48 hours
-    - Every January
-"""),
-                   Image(600, flip_y(WindowSize, 150), "crunch time.jpg", scale=0.8),
-                   ],
-                  [Text(50, flip_y(WindowSize, 40), """I'm a video game programming hobbyist
-
 - Active board member at Python Philippines
+- Use game programming to teach programming
 - https://mrvaldez.ph
 - https://github.com/mrvaldez
 - @MrValdez
