@@ -7,6 +7,13 @@ from helper import (flip_y,
 
 from hack import Image
 
+"""
+collision = (box1_pos[0] + box1_size[0] > box2_pos[0] and
+             box1_pos[0] < box2_pos[0] + box2_size[0] and
+             box1_pos[1] + box1_size[1] > box2_pos[1] and
+             box1_pos[1] < box2_pos[1] + box2_size[1])
+"""
+
 class Slide1(SlideTemplate):
     def __init__(self, WindowSize):
         title = "Stage 4"
