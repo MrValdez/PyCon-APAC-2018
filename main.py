@@ -45,7 +45,8 @@ class Engine(arcade.Window):
 
         self.WindowSize = WindowSize
         self.currentStage = self.stages[0]
-#        self.currentStage = self.stages[4]      # debugging
+#        self.currentStage = self.stages[-1]      # debugging
+#        self.currentStage = self.stages[1]      # debugging
         self.currentStage.load()
         self.fade = FadeScreen(WindowSize)
         self.gameState = GameState.RUNNING
