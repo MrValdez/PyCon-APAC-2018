@@ -6,6 +6,11 @@ These slides were created with the game programming library, Arcade. I used this
 
 There's a possibility there won't be audio during the event, so I may not be able to demonstrated playing sounds. But if you need to make sound effects, I recommend sfxr.
 
+To run the slide presentation:
+
+$ pip install -r requirements.txt
+$ python main.py
+
 Images used:
 
 - https://opengameart.org/content/lpc-cliffsmountains-with-grass-top-and-more
