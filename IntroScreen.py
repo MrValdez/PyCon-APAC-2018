@@ -25,13 +25,14 @@ He'll need your help.
 
 
 
-
 3 volunteers from the audience to help:
 
 
 
-Two artists.    One player.
 
+
+
+One artist.    One player.
 
 
 This is the one hour story of how PyCon APAC 2018 made a game.
@@ -39,21 +40,17 @@ This is the one hour story of how PyCon APAC 2018 made a game.
         ]
         self.WindowSize = WindowSize
 
-        artist1 = arcade.Sprite("crono_back.gif")
-        artist1.center_x = 375
-        artist1.center_y = -660
+        artist = arcade.Sprite("artist.png", scale=0.31)
+        artist.center_x = 420
+        artist.center_y = -680
         
-        artist2 = arcade.Sprite("crono_back.gif")
-        artist2.center_x = 475
-        artist2.center_y = -660
         
-        tester = arcade.Sprite("crono_back.gif")
+        tester = arcade.Sprite("gamer.png", scale=0.7)
         tester.center_x = 600
-        tester.center_y = -660
+        tester.center_y = -680
 
         self.sprites = arcade.SpriteList()
-        self.sprites.append(artist1)
-        self.sprites.append(artist2)
+        self.sprites.append(artist)
         self.sprites.append(tester)
 
     def load(self):
@@ -66,7 +63,8 @@ This is the one hour story of how PyCon APAC 2018 made a game.
 
         #debug values:
         #self.start_timer = 0
-        #self.scroll_speed = 3
+        #self.scroll_speed = 10
+        #self.end_timer = 100
 
     def update(self, delta_time):
         if self.start_timer > 0:
