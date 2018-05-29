@@ -57,7 +57,7 @@ class Slide2(SlideTemplate):
         self.mario_sprite = Image(0, 0, "mario_sprite.png", scale=2.3)
         self.mario_box = Image(0, 0, "mario_box.png", scale=2.3)
         self.mario_score = Image(0, 0, "mario_score.png", scale=2.3)
-        self.monitor = Image(0, 0, "monitor.png", scale=0.8)
+        self.monitor = Image(0, 0, "monitor.jpg", scale=0.6)
 
         animation5_text = """Some game libraries (such as Arcade) have their
 Y axis origin at the bottom left.
@@ -66,7 +66,7 @@ The maths to flip the y-coordinates is just (height - y)"""
         kwargs = {"color": arcade.color.GRAY, "align": "left", "anchor_x": "left", "font_size": 15}
         self.coordinate_note = Text(400, 400, animation5_text, kwargs=kwargs)
 
-        self.resolution_text = Text(370, 330, "640 x 480\n800 x 600\n1024 x 768")
+        self.resolution_text = Text(330, 310, "640 x 480\n800 x 600\n1024 x 768")
 
     def resetAnimation(self):
         self.targetDelta = 10
@@ -210,7 +210,7 @@ The maths to flip the y-coordinates is just (height - y)"""
         self.coordinate_note.draw()
 
     def animation6_draw(self):
-        self.monitor.left, self.monitor.top = 120, 400
+        self.monitor.left, self.monitor.top = 120, 450
 
         self.monitor.draw()
         self._draw_graph()
