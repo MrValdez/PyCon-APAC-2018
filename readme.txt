@@ -6,12 +6,21 @@ These slides were created with the game programming library, Arcade. I used this
 
 There's a possibility there won't be audio during the event, so I may not be able to demonstrated playing sounds. But if you need to make sound effects, I recommend sfxr.
 
-To run the slide presentation:
+# To run the slide presentation
 
 $ pip install -r requirements.txt
 $ python main.py
 
-Images used:
+# About me
+
+- I'm a video game programming hobbyist
+- Active board member at Python Philippines
+- Use game programming to teach programming
+- https://mrvaldez.ph
+- https://github.com/mrvaldez
+- @MrValdez
+
+# Images used
 
 - https://opengameart.org/content/lpc-cliffsmountains-with-grass-top-and-more
  (Lanea Zimmerman ("Sharm"), Daniel Eddeland, and Wiliam Thompson)
