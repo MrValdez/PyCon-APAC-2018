@@ -21,6 +21,12 @@ class Stage1(Screen):
         self.avatar.center_x = 860
         self.avatar.center_y = 120
 
+        joysticks = arcade.get_joysticks()
+        if joysticks:
+            self.joystick = joysticks[0]
+            self.joystick.open()
+            self.joystick.on_joyhat_motion = self.on_joyhat_motion
+
         self.sprites = arcade.SpriteList()
         self.sprites.append(self.avatar)
 
@@ -88,6 +94,20 @@ class Stage1(Screen):
 
         for text in self.texts:
             text.draw()
+
+    def on_joyhat_motion(self, joystick, hat_x, hat_y):
+        key = None
+        
+        if hat_y > 0: key = arcade.key.UP
+        if hat_y < 0: key = arcade.key.DOWN 
+        if hat_x < 0: key = arcade.key.LEFT
+        if hat_x > 0: key = arcade.key.RIGHT
+        
+        if key is not None:
+            self.avatar.move(key, None, keydown=True)
+        else:
+            self.avatar.change_x = 0
+            self.avatar.change_y = 0
 
     def on_key_press(self, key, modifiers):
         self.avatar.move(key, modifiers, keydown=True)
