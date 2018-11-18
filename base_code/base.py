@@ -14,11 +14,11 @@ while GameIsRunning:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 GameIsRunning = False
-                pygame.quit()
 
         if event.type == pygame.QUIT:
             GameIsRunning = False
 
     clock.tick(60)
     pygame.display.flip()
-    
+
+pygame.quit()

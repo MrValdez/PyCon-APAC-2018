@@ -92,7 +92,6 @@ while isRunning:
     
     if keystate[pygame.K_ESCAPE]:
         isRunning = False
-        pygame.quit()
 
     if useJoystick:
         if pygame.joystick.Joystick(1).get_button(0):
@@ -150,3 +149,5 @@ while isRunning:
     
     pygame.display.update()
     time.tick(60)
+
+pygame.quit()
